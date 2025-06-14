@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome Home</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+        body {
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #222;
+        }
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            background: url('student-coding.jpg') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .hero-overlay {
+            background: rgba(255,255,255,0.88);
+            border-radius: 20px;
+            padding: 48px 36px;
+            max-width: 500px;
+            width: 90vw;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.10);
+            text-align: center;
+        }
+        .hero-overlay h1 {
+            color: #0984e3;
+            font-size: 2.5em;
+            margin-bottom: 16px;
+        }
+        .hero-overlay h2 {
+            color: #636e72;
+            margin-top: 0;
+            margin-bottom: 18px;
+            font-weight: normal;
+        }
+        .hero-overlay p {
+            color: #636e72;
+            font-size: 1.2em;
+            margin-bottom: 24px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 6px 0;
+            transition: background 0.2s;
+        }
+        .html-btn { background: #e17055; }
+        .css-btn { background: #00b894; }
+        .js-btn { background: #fdcb6e; color: #2d3436; }
+        .fcc-btn { background: #6c5ce7; }
+        .lessons-btn { background: #00bfff; }
+        .btn:hover { opacity: 0.85; }
+        .flashing-text {
+            animation: flash 1s infinite alternate;
+        }
+        @keyframes flash {
+            0%   { opacity: 1; color: #636e72; }
+            50%  { opacity: 0.2; color: #0984e3; }
+            100% { opacity: 1; color: #636e72; }
+        }
+        .flashing-bright {
+            animation: bright-flash 1.2s infinite alternate;
+            font-weight: bold;
+            text-shadow: 0 0 10px #fff, 0 0 20px #ffe066;
+        }
+        @keyframes bright-flash {
+            0%   { color: #ffe066; }
+            25%  { color: #00b894; }
+            50%  { color: #0984e3; }
+            75%  { color: #fdcb6e; }
+            100% { color: #ffe066; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="hero-overlay">
+            <h1>Let Get Started!</h1>
+            <h2 class="flashing-bright" style="margin-top:0; margin-bottom:18px; font-weight:normal;">Junior Scholars</h2>
+            <ul style="list-style: none; padding: 0; margin: 0 0 18px 0; color: #636e72; font-size: 1.1em;">
+                <li>Fast Learning</li>
+                <li>Easy Understand</li>
+                <li>Motivated</li>
+                <li>Future Engineer</li>
+            </ul>
+            <a href="page2.html" class="btn lessons-btn" style="margin-bottom:20px;">Click to Begin</a>
+            <hr style="margin: 20px 0; border: none; border-top: 4px solid #0984e3; width: 100%;">
+            <span style="font-weight:bold; color:#636e72; margin-right:10px;">Online Tutorial:</span>
+            <br><br>
+            <a href="https://www.w3schools.com/html/" target="_blank" class="btn html-btn">HTML Tutorial</a>
+            <a href="https://www.w3schools.com/python/" target="_blank" class="btn css-btn">Python Tutorial</a>
+            <a href="https://www.w3schools.com/js/" target="_blank" class="btn js-btn">JavaScript Tutorial</a>
+            <a href="https://www.freecodecamp.org/learn/" target="_blank" class="btn fcc-btn">FreeCodeCamp</a>
+            <a href="https://www.codecademy.com/" target="_blank" class="btn" style="background:#ff7675;">Online Tutorial</a>
+            <br><br>
+            <a href="page2.html" class="btn lessons-btn">Go to Next Page</a>
+        </div>
+    </div>
+</body>
+</html>
