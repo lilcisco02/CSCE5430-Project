@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://cdn.jsdelivr.net/pyodide/v0.23.0/full/pyodide.js"></script>    
+<script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>    
     <meta charset="UTF-8">
     <title>Python Tutorial</title>
     <link rel="stylesheet" href="style.css">
@@ -9,12 +9,16 @@
 <body>
     <div class="container">
         <h1>Python Tutorial</h1>
+        <a href = "homepage.html">
+            <button type="top-button">Home</button>
+        </a>
         <p>Learn Python step by step with interactive examples.</p>
 
         <div class="lesson">
             <h2>Lesson 1: Printing in Python</h2>
             <pre><code>print("Hello, World!")</code></pre>
-            <button onclick="runCode(`print('Hello, World!')`)">Run Code</button>
+            <button onclick="runCode(`print('Hello, World!')`,'output1')">Run Code</button>
+            <pre id="output1">Output</pre>
         </div>
 
         <div class="lesson">
@@ -22,7 +26,8 @@
             <pre><code>x = 10
 y = 20
 print(x + y)</code></pre>
-            <button onclick="runCode(`x = 10;\ny = 20;\nprint(x + y)`)">Run Code</button>
+            <button onclick="runCode(`x = 10\ny = 20\nprint(x + y)`, 'output2')">Run Code</button>
+            <pre id="output2">Output</pre>
         </div>
 
         <div class="lesson">
@@ -36,7 +41,8 @@ count = 0
 while count < 5:
     print("Count:", count)
     count += 1</code></pre>
-            <button onclick="runCode(`for i in range(5):\n    print('Iteration:', i)`)">Run Code</button>
+            <button onclick="runCode(`for i in range(5):\n    print('Iteration:', i)`, 'output3')">Run Code</button>
+            <pre id="output3">Output</pre>
         </div>
 
         <div class="lesson">
@@ -47,7 +53,8 @@ if age >= 18:
     print("You are an adult!")
 else:
     print("You are a minor.")</code></pre>
-            <button onclick="runCode(`age = 18;\nif age >= 18:\n    print('You are an adult!')`)">Run Code</button>
+            <button onclick="runCode(`age = 18\nif age >= 18:\n    print('You are an adult!')`, 'output4')">Run Code</button>
+            <pre id="output4">Output</pre>
         </div>
 
         <div class="lesson">
@@ -58,7 +65,8 @@ def greet(name):
 
 # Call the function
 print(greet("Alice"))</code></pre>
-            <button onclick="runCode(`def greet(name):\n    return 'Hello, ' + name;\nprint(greet('Alice'))`)">Run Code</button>
+            <button onclick="runCode(`def greet(name):\n    return 'Hello, ' + name;\nprint(greet('Alice'))`, 'output5')">Run Code</button>
+            <pre id="output5">Output</pre>
         </div>
 
         <div class="lesson">
@@ -70,10 +78,11 @@ with open("example.txt", "w") as file:
 # Reading a file
 with open("example.txt", "r") as file:
     print(file.read())</code></pre>
-            <button onclick="runCode(`with open('example.txt', 'w') as file:\n    file.write('Hello, Python!')`)">Run Code</button>
+            <button onclick="runCode(`with open('example.txt', 'w') as file:\n    file.write('Hello, Python!')`, 'output6')">Run Code</button>
+            <pre id="output6">Output</pre>
         </div>
 
-        <p id="output"></p>
+       
     </div>
     <script src="script.js"></script>
 </body>
