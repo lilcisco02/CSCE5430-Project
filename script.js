@@ -1,26 +1,23 @@
-async function testPyodide() {
-    let pyodide = await loadPyodide();
-    console.log("Pyodide loaded successfully!");
-}
-testPyodide();
+let pyodideReadyPromise = loadPyodide();
 
-async function runCode(code) {
-    let outputElement = document.getElementById("output");
-    try {
-        let pyodide = await loadPyodide();
-        
-        // Capture Python output
-        let result = pyodide.runPython(`
+async function runCode(textareaId, outputId = "output1") {
+    const code = document.getElementById(textareaId).value;
+    const outputElement = document.getElementById(outputId);
+    outputElement.innerText = "Running...";
+
+  try {
+    const pyodide = await pyodideReadyPromise;
+
+    await pyodide.runPythonAsync(`
 import sys
 from io import StringIO
 sys.stdout = StringIO()
-exec("""${code}""")
-sys.stdout.getvalue()
-        `);
-        
-        // Update the webpage with output
-        outputElement.innerText = result.trim() || "No output generated!";
-    } catch (error) {
-        outputElement.innerText = "Error: " + error.message;
-    }
+`);
+
+    await pyodide.runPythonAsync(code);
+    const result = await pyodide.runPythonAsync("sys.stdout.getvalue()");
+    outputElement.innerText = result.trim() || "No output generated!";
+  } catch (error) {
+    outputElement.innerText = "Error: " + error.message;
+  }
 }
