@@ -4,32 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Questions Page</title>
-    <link rel="stylesheet" href = "styleB.css">
+    <link rel="stylesheet" href = "style.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+   
 </head>
-    <h1>
-        Python Practice Questions
-    </h1>
-<body>
-    <div class="content-wrapper">
-        <section class="questions-list">
-        <a href = "testpage.html">
-            <button type="button">Question 1: Arrays</button>
-        </a>
-        <a href="testpage2.html">
-            <button type="button">Question 2: Loops</button>
-        </a>
-        <a href = "testpage.html">
-            <button type="button">Question 3: Conditionals</button>
-        </a>
-        <a href="testpage2.html">
-            <button type="button">Question 4: Recursion</button>
-        </a>
-        </section>
-        <aside class="side-image">
-            <img src="Images\python-hero.jpg" alt="Python Image">
-        </aside>
 
+    
+<body>
+    <div class= "container">
+
+            <h1>
+                Python Practice Questions
+            </h1>
+            <a href = "homepage.html">
+                <button type="top-button">Home</button>
+            </a>
+    
+            <div class="question">
+
+            <h2>Question 1: Arrays</h2>
+            <pre><code>In an array of integers [1,5,3,8,7], return the highest number.</code></pre>
+            <label for="answer1"> Answer: </label><br>
+            <textarea id="answer1" rows="10" cols="50" placeholder="Type Answer Here..."></textarea>
+            <button onclick="runCode('answer1', 'output1')">Run Code</button>
+            <pre id="output1">Output</pre>
+
+            <h2>Question 2: Loops</h2>
+            <pre><code>Starting with variable n = 1, create a loop that doubles n until it equals 64. </code></pre>
+            <textarea id="answer2" rows="10" cols="50" placeholder="Type Answer Here..."></textarea>
+            <button onclick="runCode('answer2', 'output2')">Run Code</button>
+            <pre id="output2">Output</pre>
+
+            <h2>Question 3: Conditional</h2>
+            <pre><code>Create a program that takes variables A = 45 and B = 56, and checks if they are the same.</code></pre>
+            <textarea id="answer3" rows="10" cols="50" placeholder="Type Answer Here..."></textarea>
+            <button onclick="runCode('answer3', 'output3')">Run Code</button>
+            <pre id="output3">Output</pre>
+
+            <h2>Question 4: Recursion</h2>
+            <pre><code>Write a program that prints the first 25 integers using recursion.</code></pre>
+            <textarea id="answer4" rows="10" cols="50" placeholder="Type Answer Here..."></textarea>
+            <button onclick="runCode('answer4', 'output4')">Run Code</button>
+            <pre id="output4">Output</pre>
+
+            <aside class="side-image">
+                <img src="Images\python-hero.jpg" alt="Python Image">
+            </aside>
+
+        </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.js"></script>
+    <script src="script.js"></script>
+
+
 </body>
 </html>
