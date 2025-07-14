@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up</title>
+  <link rel="stylesheet" href="../static/css/loginstyles.css" />
+</head>
+<body>
+  <div class="login-container">
+    <h2>Create Your Account</h2>
+    <form id="signupForm" method="POST" action="/signup.html">
+      <input type="text" name="name" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email Address" required />
+      <input type="password" name="password" placeholder="Create Password" required />
+      <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+
+      <select name="role"id="role" required>
+        <option value="">Select Role</option>
+        <option value="student">Student</option>
+        <option value="admin">Admin</option>
+      </select>
+
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <div class="login-links">
+      <a href="login.html">← Back to Login</a>
+    </div>
+  </div>
+</body>
+</html>
