@@ -17,7 +17,7 @@
         .hero {
             position: relative;
             min-height: 100vh;
-            background: url('student-coding.jpg') center/cover no-repeat;
+            background: url('../static/Images/student-coding.jpg') center/cover no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -62,17 +62,56 @@
         .js-btn { background: #fdcb6e; color: #2d3436; }
         .fcc-btn { background: #6c5ce7; }
         .btn:hover { opacity: 0.85; }
+
+        .sidebar{
+            position: absolute;
+            top: 24px;
+            Right: 24px;
+
+            background: rgba(255, 255, 255, 0.88);
+            border-radius: 20px;
+            padding: 24px 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.10);
+
+            color: #2d3436;
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            z-index: 10;
+        }
+
+        .help{
+            position:absolute;
+            top: 24px;
+            left: 24px;
+            z-index: 10;
+        }
+
+
     </style>
 </head>
 <body>
+    <div class="sidebar">
+        <p><strong> Logged in as:</strong></p>
+        <p>{{ username }}</p>
+        <a href="/logout">Logout</a>
+    </div>
+
+    <div class="help">
+        <a href="HelpMe.html" style="display:inline-block; margin:8px; padding:12px 24px; background:#ffffff; color:#000000; border-radius:6px; text-decoration:none; font-weight:bold;">Help Page</a>
+    </div>
+
     <div class="hero">
         <div class="hero-overlay">
             <h1>Welcome Home!</h1>
             <h2 style="color:#a3ac29; margin-top:0; margin-bottom:18px; font-weight:normal;">Junior Scholars</h2>
             <p>Jump into coding with our easy tutorials.</p>
-            <a href="python_tutorial.html" style="display:inline-block; margin:8px; padding:12px 24px; background:#2196f3; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold;">Python</a>
+            <a href="python_tutorial1.html" style="display:inline-block; margin:8px; padding:12px 24px; background:#2196f3; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold;">Python</a>
             <a href="Question.html" style="display:inline-block; margin:8px; padding:12px 24px; background:#4caf50; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold;">Questions</a>
-             <a href="login.html" style="display:inline-block; margin:8px; padding:12px 24px; background:#4b0070; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold;">Login</a>
+            <a href="login.html" style="display:inline-block; margin:8px; padding:12px 24px; background:#4b0070; color:#fff; border-radius:6px; text-decoration:none; font-weight:bold;">Login</a>
+            {% if role == 'admin' %}
+            <a href="Administrator.html" style="display:inline-block; margin: 8px; padding:12px 24px; background:#d63031;color:#fff; border-radius:6px; text-decoration:none; font-weight:bold;">Admin Page</a>
+            {% endif %}
+        
         </div>
     </div>
 </body>
