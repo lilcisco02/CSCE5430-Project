@@ -4,14 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login Page</title>
-  <link rel="stylesheet" href="styleslogin.css" />
+  <link rel="stylesheet" href="../static/css/loginstyles.css" />
 </head>
 <body>
   <div class="login-container">
     <h2>Login</h2>
-    <form id="loginForm">
-      <input type="text" id="username" placeholder="Username" required />
-      <input type="password" id="password" placeholder="Password" required />
+    <form id="loginForm" method = "POST" action="/login.html">
+      <input type="email" name="email" id="email" placeholder="email" required />
+      <input type="password" name="password" id="password" placeholder="Password" required />
       <div class="remember-me">
         <input type="checkbox" id="rememberMe" />
         <label for="rememberMe">Remember Me</label>
@@ -20,10 +20,10 @@
     </form>
 
     <div class="login-links">
-      <a href="#">Forgot Username?</a> |
-      <a href="#">Forgot Password?</a>
+      <a href="forgot-username.html">Forgot Username?</a>|
+      <a href="forgot-password.html">Forgot Password?</a>
       <br />
-      <a href="#" class="signup-link">New user? Create an account</a>
+      <a href="signup.html" class="signup-link">New user? Create an account</a>
     </div>
 
     <div class="back-home">
