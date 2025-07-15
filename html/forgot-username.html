@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forgot Username</title>
+  <link rel="stylesheet" href="../static/css/loginstyles.css" />
+</head>
+<body>
+  <div class="login-container">
+    <h2>Recover Username</h2>
+    <p>Enter your registered email address and we’ll help you recover your username.</p>
+
+    <form id="recoverUsernameForm">
+      <input type="email" placeholder="Email Address" required />
+      <button type="submit">Send Recovery Email</button>
+    </form>
+
+    <div class="login-links">
+      <a href="login.html">← Back to Login</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("recoverUsernameForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const emailInput = this.querySelector("input[type='email']").value.trim();
+
+      if (emailInput === "") {
+        alert("Please enter your email address.");
+      } else {
+        alert("Your username recovery instructions have been sent to " + emailInput);
+      }
+    });
+  </script>
+</body>
+</html>

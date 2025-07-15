@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrator Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(rgba(34,34,34,0.7),rgba(34,34,34,0.7)), url('student-coding.jpg') center center/cover no-repeat;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .admin-container {
+            max-width: 600px;
+            margin: 60px auto;
+            background: #333;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(44,62,80,0.10);
+            padding: 32px 28px;
+        }
+        h1 {
+            color: #ffe066;
+            margin-bottom: 18px;
+        }
+        h2 {
+            color: #ffe066;
+            margin: 24px 0 12px;
+            font-size: 1.5em;
+        }
+        label, input, button, textarea {
+            display: block;
+            margin-bottom: 14px;
+            font-size: 1em;
+        }
+        input, button, textarea {
+            padding: 8px;
+            border-radius: 6px;
+            border: none;
+        }
+        button {
+            background: #0984e3;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #00b894;
+        }
+        #user-list, #lesson-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        #user-list li, #lesson-list li{
+            background: #444;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        #user-list button, #lesson-list button {
+            background: transparent;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #user-list button:hover, #lesson-list button:hover {
+            background: #fff;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Administrator Panel</h1>
+
+        <!-- User Management -->
+        <h2>User Management</h2>
+        <form>
+            <label for="user-search">Search User:</label>
+            <input type="text" id="user-search" placeholder="Enter username or email">
+            <button type="submit">Search</button>
+        </form>
+        <ul id="user-list">
+            <!-- Dynamic content will be loaded here -->
+        </ul>
+        <hr>
+
+        <!-- Lesson Management -->
+        <h2>Lesson Management</h2>
+        <form id="lesson-form">
+            <label for="lesson-title">Add Lesson:</label>
+            <input type="text" id="lesson-title" placeholder="Lesson title">
+            <label for="lesson-content">Lesson Content:</label>
+            <textarea id="lesson-content" placeholder="Lesson content" rows="4" style="width:100%;"></textarea>
+            <button type="submit">Add</button>
+        </form>
+        <ul id="lesson-list">
+            <!-- Dynamic content only, leave empty -->
+        </ul>
+        <hr>
+
+        <!-- Dashboard/Analytics (static example) -->
+        <h2>Dashboard</h2>
+        <p>Total Users: <span id="active-users">0</span></p>
+        <p>Admin Users: <span id="admin-users">0</span></p>
+        <p>Regular Users: <span id="regular-users">0</span></p>
+        <hr>
+
+
+        <button onclick="location.href='homepage.html'" style="background:#636e72; color:#fff; border:none; border-radius:8px; padding:10px 28px; font-size:1.1em; font-weight:bold; cursor:pointer; margin-top:16px;">
+            Back to Home
+        </button>
+    </div>
+
+    <!-- Add this script before </body> -->
+    <script>
+    // INITIALIZATION AND SYNC FUNCTIONS
+
+    // Main reload function to sync all data
+    function reloadAll() {
+        console.log('Reloading all data...'); // Debug log
+        
+        try {
+            // Initialize sample data first
+            initializeSampleData();
+            
+            // Load all sections
+            loadUsers();
+            loadLessons();
+            
+            
+            // Update dashboard last
+            updateDashboard();
+            
+            console.log('All data reloaded successfully'); // Debug log
+        } catch(error) {
+            console.error('Error during reload:', error);
+            alert('Error loading data. Please refresh the page.');
+        }
+    }
+
+    // Initialize sample data if none exists
+    function initializeSampleData() {
+        console.log('Initializing sample data...'); // Debug log
+        
+        // Initialize lessons if none exist
+       if (!localStorage.getItem('lessons')) {
+    const sampleLessons = [
+        {
+            title: "Lesson 1: Printing",
+            content: `print("Hello, world!")\n\n# Challenge:\n# Print your name, favorite color, and a fun fact.`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 1
+        },
+        {
+            title: "Lesson 2: Variables",
+            content: `name = "Bob"\nhobby = "Coding"\nprint(name, "likes", hobby)`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 2
+        },
+        {
+            title: "Lesson 3: Loops",
+            content: `for i in range(3):\n    print("I love Python!")`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 3
+        },
+        {
+            title: "Lesson 4: Conditionals",
+            content: `age = 10\nif age < 13:\n    print("You're a kid!")`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 4
+        },
+        {
+            title: "Lesson 5: Functions",
+            content: `def say_hello():\n    print("Hello!")\nsay_hello()`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 5
+        },
+        {
+            title: "Lesson 6: File Handling",
+            content: `with open("hello.txt", "w") as file:\n    file.write("Hello, Python!")`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 6
+        },
+        {
+            title: "Lesson 7: Lists",
+            content: `foods = ["Pizza", "Burger", "Tacos"]\nfor food in foods:\n    print(food)`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 7
+        },
+        {
+            title: "Lesson 8: Dictionaries",
+            content: `book = {"title": "Python 101", "author": "Awais"}\nprint(book["title"])`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 8
+        },
+        {
+            title: "Lesson 9: While Loops",
+            content: `count = 3\nwhile count > 0:\n    print("Countdown:", count)\n    count -= 1`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 9
+        }
+    ];
+
+    localStorage.setItem('lessons', JSON.stringify(sampleLessons));
+
+
+
+            console.log('Sample lessons created:', sampleLessons.length); // Debug log
+        }
+
+        
+    // USER MANAGEMENT
+    }
+
+    function loadUsers() {
+    fetch("/api/users")
+        .then(res => res.json())
+        .then(data => {
+            console.log("API Response:", data)
+            const userList = document.getElementById("user-list");
+            userList.innerHTML = "";
+
+            if (!data.users || data.users.length === 0) {
+                const li = document.createElement("li");
+                li.innerHTML = '<span style="color:#aaa; font-style:italic;">No users found in the database.</span>';
+                userList.appendChild(li);
+                return;
+            }
+
+            data.users.forEach(user => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <span style="color:#fff;">
+                        <strong>${user.name}</strong> (${user.email}) - 
+                        <span style="color:${user.role.toLowerCase() === 'admin' ? '#ffe066' : '#00b894'};">${user.role} User</span>
+                    </span>
+                `;
+                userList.appendChild(li);
+            });
+        })
+        .catch(err => {
+            console.error("Failed to load users:", err);
+            alert("Error loading users from database.");
+        });
+}
+
+    // Search users across both storage types
+    document.querySelector('form').onsubmit = function(e) {
+        e.preventDefault();
+        const search = document.getElementById('user-search').value.toLowerCase().trim();
+        const userList = document.getElementById('user-list');
+        userList.innerHTML = '';
+        
+        if (!search) {
+            loadUsers(); // Show all users if search is empty
+            return;
+        }
+        
+        // Get both admin and regular users
+        const adminUsers = JSON.parse(localStorage.getItem('user-admin')) || [];
+        const regularUsers = JSON.parse(localStorage.getItem('other-users')) || [];
+        
+        // Combine all users with type indicator
+        const allUsers = [
+            ...adminUsers.map(user => ({...user, type: 'Admin', storage: 'user-admin'})),
+            ...regularUsers.map(user => ({...user, type: 'Regular', storage: 'other-users'}))
+        ];
+        
+        const filteredUsers = allUsers.filter(user => 
+            user.username.toLowerCase().includes(search) ||
+            user.email.toLowerCase().includes(search) ||
+            user.type.toLowerCase().includes(search)
+        );
+        
+        if (filteredUsers.length === 0) {
+            const li = document.createElement('li');
+            li.innerHTML = `<span style="color:#e17055;">No users found matching "${search}".</span>`;
+            userList.appendChild(li);
+            return;
+        }
+        
+        filteredUsers.forEach((user) => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+                <span style="color:#fff;">
+                    <strong>${user.username}</strong> (${user.email}) - 
+                    <span style="color:${user.type === 'Admin' ? '#ffe066' : '#00b894'};">${user.type} User</span>
+                </span>
+                <span>
+                    <button onclick="editUser('${user.storage}', '${user.username}')" style="margin-right:8px;">Edit</button>
+                    <button onclick="deleteUser('${user.storage}', '${user.username}')">Delete</button>
+                </span>
+            `;
+            userList.appendChild(li);
+        });
+        
+        showAdminNotification(`Found ${filteredUsers.length} user(s) matching "${search}"`, 'info');
+    };
+
+
+    // Load lessons from localStorage and display them
+    function loadLessons() {
+        console.log('Loading lessons...'); // Debug log
+        const lessonList = document.getElementById('lesson-list');
+        lessonList.innerHTML = '';
+        const lessons = JSON.parse(localStorage.getItem('lessons')) || [];
+        
+        console.log('Found lessons:', lessons.length); // Debug log
+        
+        if (lessons.length === 0) {
+            const li = document.createElement('li');
+            li.innerHTML = '<span style="color:#aaa; font-style:italic;">No lessons created yet. Add your first lesson above.</span>';
+            lessonList.appendChild(li);
+            return;
+        }
+        
+        lessons.forEach((lesson, idx) => {
+            const li = document.createElement('li');
+            li.style.cssText = 'background: #444; margin: 8px 0; padding: 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;';
+            li.innerHTML = `
+                <span style="color:#fff;">
+                    <strong>${lesson.title}</strong>
+                    ${lesson.content ? `<br><small style="color:#aaa;">${lesson.content.substring(0, 50)}${lesson.content.length > 50 ? '...' : ''}</small>` : ''}
+                </span>
+                <span>
+                    <button onclick="editLesson(${idx})" style="margin-right:8px; background: transparent; color: #fff; border: 1px solid #fff; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Edit</button>
+                    <button onclick="deleteLesson(${idx})" style="background: transparent; color: #fff; border: 1px solid #fff; padding: 6px 12px; border-radius: 4px; cursor: pointer;">Delete</button>
+                </span>
+            `;
+            lessonList.appendChild(li);
+        });
+        
+        console.log('Lessons loaded successfully'); // Debug log
+    }
+
+    // Add lesson with enhanced validation and sync
+    document.getElementById('lesson-form').onsubmit = function(e) {
+        e.preventDefault();
+        console.log('Form submitted!'); // Debug log
+        
+        const lessonTitle = document.getElementById('lesson-title').value.trim();
+        const lessonContent = document.getElementById('lesson-content').value.trim();
+        
+        console.log('Title:', lessonTitle, 'Content:', lessonContent); // Debug log
+        
+        if (!lessonTitle) {
+            alert('Please enter a lesson title!');
+            return;
+        }
+        
+        if (lessonTitle.length > 100) {
+            alert('Lesson title is too long! Please keep it under 100 characters.');
+            return;
+        }
+        
+        let lessons = JSON.parse(localStorage.getItem('lessons')) || [];
+        
+        // Check if lesson title already exists
+        if (lessons.find(lesson => lesson.title.toLowerCase() === lessonTitle.toLowerCase())) {
+            alert('A lesson with this title already exists! Please choose a different title.');
+            return;
+        }
+        
+        const newLesson = { 
+            title: lessonTitle, 
+            content: lessonContent || '',
+            created: new Date().toISOString(),
+            id: Date.now(),
+            createdBy: "admin"
+        };
+        
+        lessons.push(newLesson);
+        
+        console.log('Saving lessons:', lessons); // Debug log
+        localStorage.setItem('lessons', JSON.stringify(lessons));
+        
+        // Clear form
+        document.getElementById('lesson-title').value = '';
+        document.getElementById('lesson-content').value = '';
+        
+        // Reload lessons and update dashboard
+        loadLessons();
+        updateDashboard();
+        
+        // Show success notification
+        try {
+            showAdminNotification(`Lesson "${lessonTitle}" created successfully!`, 'success');
+        } catch(e) {
+            alert(`Lesson "${lessonTitle}" created successfully!`);
+        }
+        
+        console.log('Lesson added successfully'); // Debug log
+    };
+
+    // Delete lesson by index - FIXED
+    function deleteLesson(idx) {
+        console.log('Deleting lesson at index:', idx); // Debug log
+        let lessons = JSON.parse(localStorage.getItem('lessons')) || [];
+        
+        if (idx < 0 || idx >= lessons.length) {
+            alert('Invalid lesson index!');
+            return;
+        }
+        
+        const lesson = lessons[idx];
+        const lessonTitle = lesson.title || `Lesson ${idx + 1}`;
+        
+        if (confirm(`Are you sure you want to delete "${lessonTitle}"? This action cannot be undone.`)) {
+            lessons.splice(idx, 1);
+            localStorage.setItem('lessons', JSON.stringify(lessons));
+            
+            console.log('Lesson deleted, remaining lessons:', lessons.length); // Debug log
+            
+            // Reload lessons and update dashboard
+            loadLessons();
+            updateDashboard();
+            
+            // Show success notification
+            try {
+                showAdminNotification(`Lesson "${lessonTitle}" deleted successfully.`, 'warning');
+            } catch(e) {
+                alert(`Lesson "${lessonTitle}" deleted successfully.`);
+            }
+        }
+    }
+
+    // Edit lesson - ENHANCED VERSION
+    function editLesson(idx) {
+        console.log('Editing lesson at index:', idx); // Debug log
+        let lessons = JSON.parse(localStorage.getItem('lessons')) || [];
+        
+        if (idx < 0 || idx >= lessons.length) {
+            alert('Invalid lesson index!');
+            return;
+        }
+        
+        const lesson = lessons[idx];
+        
+        const newTitle = prompt('Edit lesson title:', lesson.title);
+        if (!newTitle || newTitle.trim() === '') return;
+        
+        if (newTitle.length > 100) {
+            alert('Lesson title is too long! Please keep it under 100 characters.');
+            return;
+        }
+        
+        // Check if new title already exists (only if title changed)
+        if (newTitle !== lesson.title && lessons.find(l => l.title.toLowerCase() === newTitle.toLowerCase())) {
+            alert('A lesson with this title already exists! Please choose a different title.');
+            return;
+        }
+        
+        const newContent = prompt('Edit lesson content:', lesson.content || '');
+        if (newContent === null) return; // User cancelled
+        
+        // Update lesson
+        lessons[idx].title = newTitle.trim();
+        lessons[idx].content = newContent.trim();
+        lessons[idx].edited = new Date().toISOString();
+        
+        console.log('Updated lesson:', lessons[idx]); // Debug log
+        localStorage.setItem('lessons', JSON.stringify(lessons));
+        
+        // Reload lessons
+        loadLessons();
+        
+        // Show success notification
+        try {
+            showAdminNotification(`Lesson "${newTitle}" updated successfully!`, 'success');
+        } catch(e) {
+            alert(`Lesson "${newTitle}" updated successfully!`);
+        }
+        
+        console.log('Lesson updated successfully'); 
+            
+            li.innerHTML = `
+                <div style="flex: 1; color: #fff;">
+                    <div style="margin-bottom: 6px; line-height: 1.4;">${text}</div>
+                    ${timestamp ? `<div style="color: #aaa; font-size: 0.85em;">Posted: ${timestamp}</div>` : ''}
+                </div>
+                <div style="display: flex; gap: 8px; margin-left: 12px;">
+                    <button onclick="editAnnouncement(${idx})" 
+                            style="background: #0984e3; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9em;">
+                        Edit
+                    </button>
+                    <button onclick="deleteAnnouncement(${idx})" 
+                            style="background: #e17055; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.9em;">
+                        Delete
+                    </button>
+                </div>
+            `;
+            annList.appendChild(li);
+        };
+    // DASHBOARD
+
+    // Update dashboard statistics
+    function updateDashboard() {
+        console.log('Updating dashboard...'); // Debug log
+        
+        // Count users from both storage locations
+        fetch("/api/users")
+            .then(res => res.json())
+            .then(data => {
+                const users = data.users || [];
+                const totalUsers = users.length;
+                const adminUsers = users.filter(user => user.role.toLowerCase() === 'admin').length;
+                const regularUsers = users.filter(user => user.role.toLowerCase() !== 'admin').length;
+                
+                document.getElementById('active-users').textContent = totalUsers;
+                document.getElementById('admin-users').textContent = adminUsers;
+                document.getElementById('regular-users').textContent = regularUsers;
+            
+
+        
+        
+                console.log('Dashboard stats:', {
+                    totalUsers,
+                    adminUsers,
+                    regularUsers,
+                });
+    })
+    .catch(err => {
+        console.error("Failed to fetch user countes: ", err)
+    });
+        
+        
+        console.log('Dashboard updated successfully'); // Debug log
+    }
+
+    // NOTIFICATION SYSTEM
+
+    // Show admin notification messages
+    function showAdminNotification(message, type = 'info') {
+        // Remove existing notification
+        const existingNotification = document.getElementById('admin-notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        // Create notification
+        const notification = document.createElement('div');
+        notification.id = 'admin-notification';
+        notification.style.cssText = `
+            position: fixed; top: 20px; right: 20px; z-index: 10000;
+            padding: 16px 20px; border-radius: 8px; color: #fff; font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3); max-width: 350px;
+            transform: translateX(100%); transition: transform 0.3s ease;
+        `;
+        
+        // Set background color based on type
+        const colors = {
+            success: '#00b894',
+            error: '#e17055',
+            warning: '#fdcb6e',
+            info: '#0984e3'
+        };
+        notification.style.background = colors[type] || colors.info;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Auto remove after 4 seconds
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.remove();
+                    }
+                }, 300);
+            }
+        }, 4000);
+    }
+
+    // INITIALIZATION
+
+    // Main initialization function
+    window.onload = function() {
+        console.log('Administrator Panel Loading...');
+        
+        // Short delay to ensure DOM is fully ready
+        setTimeout(() => {
+            try {
+                // Initialize and load all data
+                reloadAll();
+                
+                // Show welcome message
+                setTimeout(() => {
+                    try {
+                        showAdminNotification('Administrator panel loaded successfully!', 'success');
+                    } catch(e) {
+                        console.log('Administrator panel loaded successfully!');
+                    }
+                }, 1000);
+                
+                console.log('Administrator Panel Loaded Successfully');
+                console.log('Current data:');
+                console.log('- Users:', JSON.parse(localStorage.getItem('user-admin') || '[]').length + JSON.parse(localStorage.getItem('other-users') || '[]').length);
+                console.log('- Lessons:', JSON.parse(localStorage.getItem('lessons') || '[]').length);
+                
+                
+            } catch(error) {
+                console.error('Error during initialization:', error);
+                alert('Error loading administrator panel. Please refresh the page.');
+            }
+        }, 200);
+    };
+
+    // Manual refresh function for testing
+    function manualRefresh() {
+        console.log('Manual refresh triggered');
+        reloadAll();
+        try {
+            showAdminNotification('Data refreshed successfully!', 'info');
+        } catch(e) {
+            alert('Data refreshed successfully!');
+        }
+    }
+
+    // Auto-refresh data every 30 seconds to stay synced
+    setInterval(function() {
+        console.log('Auto-refresh triggered');
+        updateDashboard();
+    }, 30000);
+
+    // ...existing code for other functions (users, etc.)...
+    </script>
+</body>
+</html>

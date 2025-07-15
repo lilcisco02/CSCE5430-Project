@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Python Tutorial for Beginners</title>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.23.4/full/pyodide.js"></script>
+  <script src="/static/js/script1.js" defer></script>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f4f4f9;
+      padding: 20px;
+      color: #333;
+    }
+    h1, h2 {
+      color: #2b6cb0;
+    }
+    .lesson {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-left: 5px solid #2b6cb0;
+      box-shadow: 0 0 6px rgba(0,0,0,0.05);
+    }
+    pre {
+      background-color: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      white-space: pre-wrap;
+    }
+    textarea {
+      width: 100%;
+      height: 120px;
+      margin-top: 10px;
+      font-family: monospace;
+      font-size: 14px;
+      padding: 10px;
+      background-color: #fafafa;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    button {
+      margin-top: 10px;
+      background-color: #2b6cb0;
+      color: white;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .output {
+      background-color: #eef;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 4px;
+      font-family: monospace;
+      white-space: pre-wrap;
+    }
+    .challenge {
+      font-weight: bold;
+      color: #d53f8c;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>🚀 Interactive Python Tutorial</h1>
+<p>
+  <a href="homepage.html" style="text-decoration:none; padding:8px 12px; background-color:#2b6cb0; color:white; border-radius:4px;">
+    ⬅ Back to Home
+  </a>
+</p>
+<p>Write Python code below, click "Run", and see the output instantly. No installation needed!</p>
+
+<!-- 🟢 Lesson 1: Printing -->
+<div class="lesson">
+  <h2>🟢 Lesson 1: Printing</h2>
+  <pre><code>print("Hello, world!")</code></pre>
+  <p class="challenge">Challenge: Print your name, favorite color, and a fun fact.</p>
+  <textarea id="code1">print("My name is Bob!")\nprint("Color: Blue")\nprint("Fun fact: Python was created in 1991!")</textarea>
+  <button onclick="runCode(document.getElementById('code1').value, 'output1')">Run</button>
+  <div class="output" id="output1">Output will appear here.</div>
+</div>
+
+<!-- 🟡 Lesson 2: Variables -->
+<div class="lesson">
+  <h2>🟡 Lesson 2: Variables</h2>
+  <pre><code>name = "Bob"\nhobby = "Coding"\nprint(name, "likes", hobby)</code></pre>
+  <p class="challenge">Challenge: Change the name and hobby and print them together.</p>
+  <textarea id="code2">name = "Alex"\nhobby = "Reading"\nprint(name, "likes", hobby)</textarea>
+  <button onclick="runCode(document.getElementById('code2').value, 'output2')">Run</button>
+  <div class="output" id="output2">Output will appear here.</div>
+</div>
+
+<!-- 🔵 Lesson 3: Loops -->
+<div class="lesson">
+  <h2>🔵 Lesson 3: Loops</h2>
+<pre><code>for i in range(3):\n    print("I love Python!")</code></pre>
+  <p class="challenge">Challenge: Print numbers from 1 to 5.</p>
+  <textarea id="code3">for i in range(1, 6):\n    print(i)</textarea>
+  <button onclick="runCode(document.getElementById('code3').value, 'output3')">Run</button>
+  <div class="output" id="output3">Output will appear here.</div>
+
+</div>
+
+<!-- 🔴 Lesson 4: Conditionals -->
+<div class="lesson">
+  <h2>🔴 Lesson 4: Conditionals</h2>
+  <pre><code>age = 10\nif age < 13:\n    print("You're a kid!")</code></pre>
+  <p class="challenge">Challenge: Change age and print the result.</p>
+  <textarea id="code4">age = 15\nif age < 13:\n    print("You're a kid!")\nelse:\n    print("You're a teen or adult!")</textarea>
+  <button onclick="runCode(document.getElementById('code4').value, 'output4')">Run</button>
+  <div class="output" id="output4">Output will appear here.</div>
+</div>
+
+<!-- 🟣 Lesson 5: Functions -->
+<div class="lesson">
+  <h2>🟣 Lesson 5: Functions</h2>
+  <pre><code>def say_hello():\n    print("Hello!")\nsay_hello()</code></pre>
+  <p class="challenge">Challenge: Write a function that greets someone by name.</p>
+  <textarea id="code5">def greet(name):\n    print("Hi", name)\ngreet("Joe")</textarea>
+  <button onclick="runCode(document.getElementById('code5').value, 'output5')">Run</button>
+  <div class="output" id="output5">Output will appear here.</div>
+</div>
+
+<!-- 🟤 Lesson 6: File Handling -->
+<div class="lesson">
+  <h2>🟤 Lesson 6: File Handling</h2>
+  <pre><code>with open("hello.txt", "w") as file:\n    file.write("Hello, Python!")</code></pre>
+  <p class="challenge">Challenge: Save a name to a file and read it back.</p>
+  <textarea id="code6">with open("names.txt", "w") as f:\n    f.write("Bob\\n")\nwith open("names.txt", "r") as f:\n    print(f.read())</textarea>
+  <button onclick="runCode(document.getElementById('code6').value, 'output6')">Run</button>
+  <div class="output" id="output6">Output will appear here.</div>
+</div>
+
+<!-- 🟢 Lesson 7: Lists -->
+<div class="lesson">
+  <h2>🟢 Lesson 7: Lists</h2>
+  <pre><code>foods = ["Pizza", "Burger", "Tacos"]\nfor food in foods:\n    print(food)</code></pre>
+  <p class="challenge">Challenge: Add a food to the list and print all items.</p>
+  <textarea id="code7">foods = ["Pizza", "Burger"]\nfoods.append("Sushi")\nprint(foods)</textarea>
+  <button onclick="runCode(document.getElementById('code7').value, 'output7')">Run</button>
+  <div class="output" id="output7">Output will appear here.</div>
+</div>
+
+<!-- 🟡 Lesson 8: Dictionaries -->
+<div class="lesson">
+  <h2>🟡 Lesson 8: Dictionaries</h2>
+  <pre><code>book = {"title": "Python 101", "author": "Awais"}\nprint(book["title"])</code></pre>
+  <p class="challenge">Challenge: Print all key-value pairs in a dictionary.</p>
+  <textarea id="code8">song = {"title": "Imagine", "artist": "John Lennon"}\nfor key in song:\n    print(key, ":", song[key])</textarea>
+  <button onclick="runCode(document.getElementById('code8').value, 'output8')">Run</button>
+  <div class="output" id="output8">Output will appear here.</div>
+</div>
+
+<!-- 🔵 Lesson 9: While Loops -->
+<div class="lesson">
+  <h2>🔵 Lesson 9: While Loops</h2>
+  <pre><code>count = 3
+while count > 0:
+    print("Countdown:", count)
+    count -= 1</code></pre>
+  <p class="challenge">Challenge: Use a while loop to repeat a message 5 times.</p>
+  <textarea id="code9">i = 0
+while i < 5:
+    print("Keep going! You can do it. Learn Python!")
+    i += 1</textarea>
+  <button onclick="runCode(document.getElementById('code9').value, 'output9')">Run</button>
+  <div class="output" id="output9">Output will appear here.</div>
+</div>
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const lessons = JSON.parse(localStorage.getItem("lessons") || "[]");
+  const lessonContainer = document.getElementById("admin-lessons");
+  const adminLessons = lessons.filter(lesson => lesson.createdBy === "admin")
+
+  if (!lessonContainer) {
+    console.warn("No admin-lessons container found.");
+    return;
+  }
+
+  if (adminLessons.length === 0) {
+    lessonContainer.innerHTML = `<p style="color: #888;">No lessons created by admin yet.</p>`;
+    return;
+  }
+
+  adminLessons.forEach((lesson, idx) => {
+    const div = document.createElement("div");
+    div.className = "lesson";
+    div.innerHTML = `
+      <h2>${lesson.title}</h2>
+      <pre><code>${lesson.content}</code></pre>
+      <textarea id="admincode${idx}">${lesson.content}</textarea>
+      <button onclick="runCode(document.getElementById('admincode${idx}').value, 'adminoutput${idx}')">Run</button>
+      <div class="output" id="adminoutput${idx}">Output will appear here.</div>
+    `;
+    lessonContainer.appendChild(div);
+  });
+});
+</script>
+
+<h2 style="margin-top: 40px; color:#2b6cb0;">🆕 Lessons Created by Admin</h2>
+<div id="admin-lessons"></div>
