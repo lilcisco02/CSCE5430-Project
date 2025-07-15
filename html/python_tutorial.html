@@ -64,6 +64,7 @@
     }
   </style>
 </head>
+
 <body>
 
 <h1>🚀 Interactive Python Tutorial</h1>
@@ -170,3 +171,36 @@ while i < 5:
   <button onclick="runCode(document.getElementById('code9').value, 'output9')">Run</button>
   <div class="output" id="output9">Output will appear here.</div>
 </div>
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  const lessons = JSON.parse(localStorage.getItem("lessons") || "[]");
+  const lessonContainer = document.getElementById("admin-lessons");
+  const adminLessons = lessons.filter(lesson => lesson.createdBy === "admin")
+
+  if (!lessonContainer) {
+    console.warn("No admin-lessons container found.");
+    return;
+  }
+
+  if (adminLessons.length === 0) {
+    lessonContainer.innerHTML = `<p style="color: #888;">No lessons created by admin yet.</p>`;
+    return;
+  }
+
+  adminLessons.forEach((lesson, idx) => {
+    const div = document.createElement("div");
+    div.className = "lesson";
+    div.innerHTML = `
+      <h2>${lesson.title}</h2>
+      <pre><code>${lesson.content}</code></pre>
+      <textarea id="admincode${idx}">${lesson.content}</textarea>
+      <button onclick="runCode(document.getElementById('admincode${idx}').value, 'adminoutput${idx}')">Run</button>
+      <div class="output" id="adminoutput${idx}">Output will appear here.</div>
+    `;
+    lessonContainer.appendChild(div);
+  });
+});
+</script>
+
+<h2 style="margin-top: 40px; color:#2b6cb0;">🆕 Lessons Created by Admin</h2>
+<div id="admin-lessons"></div>
