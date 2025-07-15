@@ -47,11 +47,11 @@
         button:hover {
             background: #00b894;
         }
-        #user-list, #lesson-list, #announcement-list {
+        #user-list, #lesson-list {
             list-style-type: none;
             padding: 0;
         }
-        #user-list li, #lesson-list li, #announcement-list li {
+        #user-list li, #lesson-list li{
             background: #444;
             margin: 8px 0;
             padding: 12px;
@@ -109,17 +109,8 @@
         <p>Total Users: <span id="active-users">0</span></p>
         <p>Admin Users: <span id="admin-users">0</span></p>
         <p>Regular Users: <span id="regular-users">0</span></p>
-        <p>Lessons Created: <span id="lessons-created">0</span></p>
         <hr>
 
-        <!-- Announcements -->
-        <h2>Announcements</h2>
-        <form id="announcement-form">
-            <textarea id="announcement-input" placeholder="Write announcement here..." rows="3" style="width:100%; color:#333;"></textarea>
-            <button type="submit">Post</button>
-        </form>
-        <ul id="announcement-list" style="list-style-type:none; padding:0; margin-top:10px;"></ul>
-        <hr>
 
         <button onclick="location.href='homepage.html'" style="background:#636e72; color:#fff; border:none; border-radius:8px; padding:10px 28px; font-size:1.1em; font-weight:bold; cursor:pointer; margin-top:16px;">
             Back to Home
@@ -141,7 +132,7 @@
             // Load all sections
             loadUsers();
             loadLessons();
-            loadAnnouncements();
+            
             
             // Update dashboard last
             updateDashboard();
@@ -158,118 +149,82 @@
         console.log('Initializing sample data...'); // Debug log
         
         // Initialize lessons if none exist
-        if (!localStorage.getItem('lessons')) {
-            const sampleLessons = [
-                { 
-                    title: "Lesson 1: Python Basics", 
-                    content: "Learn variables, strings, and basic syntax. This lesson covers the fundamentals of Python programming.",
-                    created: new Date().toISOString(),
-                    id: Date.now() + 1
-                },
-                { 
-                    title: "Lesson 2: Control Structures", 
-                    content: "Learn if statements and loops. Master conditional logic and iteration in Python.",
-                    created: new Date().toISOString(),
-                    id: Date.now() + 2
-                },
-                { 
-                    title: "Lesson 3: Functions", 
-                    content: "Learn to create and use functions. Understand parameters, return values, and scope.",
-                    created: new Date().toISOString(),
-                    id: Date.now() + 3
-                },
-                { 
-                    title: "Lesson 4: Data Structures", 
-                    content: "Learn lists, dictionaries, and tuples. Master Python's built-in data types.",
-                    created: new Date().toISOString(),
-                    id: Date.now() + 4
-                },
-                { 
-                    title: "Lesson 5: File Operations", 
-                    content: "Learn to read and write files. Handle file input/output operations safely.",
-                    created: new Date().toISOString(),
-                    id: Date.now() + 5
-                },
-                { 
-                    title: "Lesson 6: Error Handling", 
-                    content: "Learn try/except blocks. Handle errors gracefully in your Python programs.",
-                    created: new Date().toISOString(),
-                    id: Date.now() + 6
-                }
-            ];
-            localStorage.setItem('lessons', JSON.stringify(sampleLessons));
+       if (!localStorage.getItem('lessons')) {
+    const sampleLessons = [
+        {
+            title: "Lesson 1: Printing",
+            content: `print("Hello, world!")\n\n# Challenge:\n# Print your name, favorite color, and a fun fact.`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 1
+        },
+        {
+            title: "Lesson 2: Variables",
+            content: `name = "Bob"\nhobby = "Coding"\nprint(name, "likes", hobby)`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 2
+        },
+        {
+            title: "Lesson 3: Loops",
+            content: `for i in range(3):\n    print("I love Python!")`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 3
+        },
+        {
+            title: "Lesson 4: Conditionals",
+            content: `age = 10\nif age < 13:\n    print("You're a kid!")`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 4
+        },
+        {
+            title: "Lesson 5: Functions",
+            content: `def say_hello():\n    print("Hello!")\nsay_hello()`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 5
+        },
+        {
+            title: "Lesson 6: File Handling",
+            content: `with open("hello.txt", "w") as file:\n    file.write("Hello, Python!")`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 6
+        },
+        {
+            title: "Lesson 7: Lists",
+            content: `foods = ["Pizza", "Burger", "Tacos"]\nfor food in foods:\n    print(food)`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 7
+        },
+        {
+            title: "Lesson 8: Dictionaries",
+            content: `book = {"title": "Python 101", "author": "Awais"}\nprint(book["title"])`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 8
+        },
+        {
+            title: "Lesson 9: While Loops",
+            content: `count = 3\nwhile count > 0:\n    print("Countdown:", count)\n    count -= 1`,
+            created: new Date().toISOString(),
+            createdBy: "system",
+            id: Date.now() + 9
+        }
+    ];
+
+    localStorage.setItem('lessons', JSON.stringify(sampleLessons));
+
+
+
             console.log('Sample lessons created:', sampleLessons.length); // Debug log
         }
 
-        // Initialize announcements if none exist
-        if (!localStorage.getItem('announcements')) {
-            const sampleAnnouncements = [
-                {
-                    text: "Welcome to Python Learning Hub! Start with Lesson 1 to begin your journey.",
-                    timestamp: new Date().toISOString(),
-                    id: Date.now(),
-                    author: 'Administrator'
-                }
-            ];
-            localStorage.setItem('announcements', JSON.stringify(sampleAnnouncements));
-            console.log('Sample announcements created'); // Debug log
-        }
-
-        // Initialize users if none exist (for demo purposes)
-        if (!localStorage.getItem('user-admin') && !localStorage.getItem('other-users')) {
-            const sampleAdminUsers = [
-                { username: "admin", email: "admin@pythonhub.com", password: "admin123", created: new Date().toISOString() }
-            ];
-            const sampleRegularUsers = [
-                { username: "student1", email: "student1@example.com", password: "pass123", created: new Date().toISOString() },
-                { username: "student2", email: "student2@example.com", password: "pass456", created: new Date().toISOString() }
-            ];
-            localStorage.setItem('user-admin', JSON.stringify(sampleAdminUsers));
-            localStorage.setItem('other-users', JSON.stringify(sampleRegularUsers));
-            console.log('Sample users created'); // Debug log
-        }
         
-        console.log('Sample data initialization complete'); // Debug log
-    }
-
     // USER MANAGEMENT
-
-    // Load users from localStorage and display them
-    function loadUsers1() {
-        const userList = document.getElementById('user-list');
-        userList.innerHTML = '';
-        
-        // Get both admin and regular users from the storage system
-        const adminUsers = JSON.parse(localStorage.getItem('user-admin')) || [];
-        const regularUsers = JSON.parse(localStorage.getItem('other-users')) || [];
-        
-        // Combine all users with type indicator
-        const allUsers = [
-            ...adminUsers.map(user => ({...user, type: 'Admin', storage: 'user-admin'})),
-            ...regularUsers.map(user => ({...user, type: 'Regular', storage: 'other-users'}))
-        ];
-        
-        if (allUsers.length === 0) {
-            const li = document.createElement('li');
-            li.innerHTML = '<span style="color:#aaa; font-style:italic;">No users found. Users will appear here when they register.</span>';
-            userList.appendChild(li);
-            return;
-        }
-        
-        allUsers.forEach((user, idx) => {
-            const li = document.createElement('li');
-            li.innerHTML = `
-                <span style="color:#fff;">
-                    <strong>${user.username}</strong> (${user.email}) - 
-                    <span style="color:${user.type === 'Admin' ? '#ffe066' : '#00b894'};">${user.type} User</span>
-                </span>
-                <span>
-                    <button onclick="editUser('${user.storage}', '${user.username}')" style="margin-right:8px;">Edit</button>
-                    <button onclick="deleteUser('${user.storage}', '${user.username}')">Delete</button>
-                </span>
-            `;
-            userList.appendChild(li);
-        });
     }
 
     function loadUsers() {
@@ -303,65 +258,6 @@
             alert("Error loading users from database.");
         });
 }
-
-    // Delete user by storage type and username
-    function deleteUser(storageKey, username) {
-        if (confirm(`Are you sure you want to delete user "${username}"? This action cannot be undone.`)) {
-            let users = JSON.parse(localStorage.getItem(storageKey)) || [];
-            users = users.filter(user => user.username !== username);
-            localStorage.setItem(storageKey, JSON.stringify(users));
-            loadUsers();
-            updateDashboard();
-            showAdminNotification(`User "${username}" deleted successfully.`, 'warning');
-        }
-    }
-
-    // Edit user (enhanced version)
-    function editUser(storageKey, username) {
-        let users = JSON.parse(localStorage.getItem(storageKey)) || [];
-        const userIndex = users.findIndex(user => user.username === username);
-        
-        if (userIndex === -1) {
-            alert('User not found!');
-            return;
-        }
-        
-        const user = users[userIndex];
-        const newUsername = prompt('Edit username:', user.username);
-        if (!newUsername) return;
-        
-        const newEmail = prompt('Edit email:', user.email);
-        if (!newEmail) return;
-        
-        const changePassword = confirm('Do you want to change the password?');
-        let newPassword = user.password;
-        
-        if (changePassword) {
-            newPassword = prompt('Enter new password:', '');
-            if (!newPassword) return;
-        }
-        
-        // Check if new username already exists (only if username changed)
-        if (newUsername !== user.username) {
-            const adminUsers = JSON.parse(localStorage.getItem('user-admin')) || [];
-            const regularUsers = JSON.parse(localStorage.getItem('other-users')) || [];
-            const allUsers = [...adminUsers, ...regularUsers];
-            
-            if (allUsers.find(u => u.username === newUsername)) {
-                alert('Username already exists! Please choose a different one.');
-                return;
-            }
-        }
-        
-        // Update user
-        users[userIndex].username = newUsername;
-        users[userIndex].email = newEmail;
-        users[userIndex].password = newPassword;
-        
-        localStorage.setItem(storageKey, JSON.stringify(users));
-        loadUsers();
-        showAdminNotification(`User "${newUsername}" updated successfully!`, 'success');
-    }
 
     // Search users across both storage types
     document.querySelector('form').onsubmit = function(e) {
@@ -416,7 +312,6 @@
         showAdminNotification(`Found ${filteredUsers.length} user(s) matching "${search}"`, 'info');
     };
 
-    // LESSON MANAGEMENT - FIXED VERSION
 
     // Load lessons from localStorage and display them
     function loadLessons() {
@@ -430,7 +325,6 @@
         if (lessons.length === 0) {
             const li = document.createElement('li');
             li.innerHTML = '<span style="color:#aaa; font-style:italic;">No lessons created yet. Add your first lesson above.</span>';
-            li.style.cssText = 'background: #444; margin: 8px 0; padding: 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;';
             lessonList.appendChild(li);
             return;
         }
@@ -486,7 +380,8 @@
             title: lessonTitle, 
             content: lessonContent || '',
             created: new Date().toISOString(),
-            id: Date.now()
+            id: Date.now(),
+            createdBy: "admin"
         };
         
         lessons.push(newLesson);
@@ -591,37 +486,7 @@
             alert(`Lesson "${newTitle}" updated successfully!`);
         }
         
-        console.log('Lesson updated successfully'); // Debug log
-    }
-
-    // ANNOUNCEMENTS
-
-    // Load announcements from localStorage and display them
-    function loadAnnouncements() {
-        const annList = document.getElementById('announcement-list');
-        annList.innerHTML = '';
-        const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
-        
-        if (announcements.length === 0) {
-            const li = document.createElement('li');
-            li.innerHTML = '<span style="color:#aaa; font-style:italic;">No announcements yet. Create your first announcement above!</span>';
-            annList.appendChild(li);
-            return;
-        }
-        
-        announcements.forEach((announcement, idx) => {
-            const li = document.createElement('li');
-            li.style.cssText = `
-                background: #444; margin: 8px 0; padding: 12px; border-radius: 6px;
-                display: flex; justify-content: space-between; align-items: flex-start;
-                border-left: 4px solid #00b894;
-            `;
-            
-            // Handle both string and object formats
-            const text = typeof announcement === 'string' ? announcement : announcement.text;
-            const timestamp = typeof announcement === 'object' && announcement.timestamp 
-                ? new Date(announcement.timestamp).toLocaleString() 
-                : '';
+        console.log('Lesson updated successfully'); 
             
             li.innerHTML = `
                 <div style="flex: 1; color: #fff;">
@@ -640,103 +505,7 @@
                 </div>
             `;
             annList.appendChild(li);
-        });
-        
-        updateAnnouncementCount();
-    }
-
-    // Add announcement with validation
-    document.getElementById('announcement-form').onsubmit = function(e) {
-        e.preventDefault();
-        
-        const textarea = document.getElementById('announcement-input');
-        const text = textarea.value.trim();
-        
-        if (!text) {
-            alert('Please enter an announcement message!');
-            return;
-        }
-        
-        if (text.length > 500) {
-            alert('Announcement is too long! Please keep it under 500 characters.');
-            return;
-        }
-        
-        let announcements = JSON.parse(localStorage.getItem('announcements')) || [];
-        
-        // Create announcement object with timestamp
-        const newAnnouncement = {
-            text: text,
-            timestamp: new Date().toISOString(),
-            id: Date.now(),
-            author: 'Administrator'
         };
-        
-        announcements.unshift(newAnnouncement); // Add to top
-        localStorage.setItem('announcements', JSON.stringify(announcements));
-        
-        textarea.value = '';
-        loadAnnouncements();
-        updateDashboard();
-        
-        showAdminNotification('Announcement posted successfully!', 'success');
-    };
-
-    // Edit announcement
-    function editAnnouncement(idx) {
-        let announcements = JSON.parse(localStorage.getItem('announcements')) || [];
-        const announcement = announcements[idx];
-        
-        if (!announcement) return;
-        
-        const currentText = typeof announcement === 'string' ? announcement : announcement.text;
-        const newText = prompt('Edit announcement:', currentText);
-        
-        if (newText !== null && newText.trim()) {
-            if (newText.trim().length > 500) {
-                alert('Announcement is too long! Please keep it under 500 characters.');
-                return;
-            }
-            
-            // Update announcement
-            if (typeof announcements[idx] === 'string') {
-                // Convert old string format to new object format
-                announcements[idx] = {
-                    text: newText.trim(),
-                    timestamp: new Date().toISOString(),
-                    id: Date.now() + idx,
-                    author: 'Administrator',
-                    edited: true
-                };
-            } else {
-                // Update existing object
-                announcements[idx].text = newText.trim();
-                announcements[idx].edited = true;
-                announcements[idx].editedAt = new Date().toISOString();
-            }
-            
-            localStorage.setItem('announcements', JSON.stringify(announcements));
-            loadAnnouncements();
-            showAdminNotification('Announcement updated successfully!', 'success');
-        }
-    }
-
-    // Delete announcement by index
-    function deleteAnnouncement(idx) {
-        let announcements = JSON.parse(localStorage.getItem('announcements')) || [];
-        const announcement = announcements[idx];
-        const text = typeof announcement === 'string' ? announcement : announcement.text;
-        const shortText = text.length > 30 ? text.substring(0, 30) + '...' : text;
-        
-        if (confirm(`Are you sure you want to delete this announcement?\n\n"${shortText}"`)) {
-            announcements.splice(idx, 1);
-            localStorage.setItem('announcements', JSON.stringify(announcements));
-            loadAnnouncements();
-            updateDashboard();
-            showAdminNotification('Announcement deleted successfully.', 'warning');
-        }
-    }
-
     // DASHBOARD
 
     // Update dashboard statistics
@@ -744,56 +513,33 @@
         console.log('Updating dashboard...'); // Debug log
         
         // Count users from both storage locations
-        const adminUsers = JSON.parse(localStorage.getItem('user-admin')) || [];
-        const regularUsers = JSON.parse(localStorage.getItem('other-users')) || [];
-        const totalUsers = adminUsers.length + regularUsers.length;
+        fetch("/api/users")
+            .then(res => res.json())
+            .then(data => {
+                const users = data.users || [];
+                const totalUsers = users.length;
+                const adminUsers = users.filter(user => user.role.toLowerCase() === 'admin').length;
+                const regularUsers = users.filter(user => user.role.toLowerCase() !== 'admin').length;
+                
+                document.getElementById('active-users').textContent = totalUsers;
+                document.getElementById('admin-users').textContent = adminUsers;
+                document.getElementById('regular-users').textContent = regularUsers;
+            
+
         
-        // Count lessons and announcements
-        const lessons = JSON.parse(localStorage.getItem('lessons')) || [];
-        const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
         
-        console.log('Dashboard stats:', {
-            totalUsers,
-            adminUsers: adminUsers.length,
-            regularUsers: regularUsers.length,
-            lessons: lessons.length,
-            announcements: announcements.length
-        }); // Debug log
+                console.log('Dashboard stats:', {
+                    totalUsers,
+                    adminUsers,
+                    regularUsers,
+                });
+    })
+    .catch(err => {
+        console.error("Failed to fetch user countes: ", err)
+    });
         
-        // Update the dashboard numbers with null checks
-        const activeUsersEl = document.getElementById('active-users');
-        const adminUsersEl = document.getElementById('admin-users');
-        const regularUsersEl = document.getElementById('regular-users');
-        const lessonsCreatedEl = document.getElementById('lessons-created');
-        
-        if (activeUsersEl) activeUsersEl.textContent = totalUsers;
-        if (adminUsersEl) adminUsersEl.textContent = adminUsers.length;
-        if (regularUsersEl) regularUsersEl.textContent = regularUsers.length;
-        if (lessonsCreatedEl) lessonsCreatedEl.textContent = lessons.length;
-        
-        // Add announcement count if not exists
-        updateAnnouncementCount();
         
         console.log('Dashboard updated successfully'); // Debug log
-    }
-
-    // Update announcement count in dashboard
-    function updateAnnouncementCount() {
-        const announcements = JSON.parse(localStorage.getItem('announcements')) || [];
-        
-        let announcementCount = document.getElementById('announcement-count');
-        if (!announcementCount) {
-            // Find the dashboard section and add announcement count
-            const dashboardSection = document.querySelector('h2:nth-of-type(3)').nextElementSibling;
-            const announcementPara = document.createElement('p');
-            announcementPara.innerHTML = 'Total Announcements: <span id="announcement-count">0</span>';
-            dashboardSection.appendChild(announcementPara);
-            announcementCount = document.getElementById('announcement-count');
-        }
-        
-        if (announcementCount) {
-            announcementCount.textContent = announcements.length;
-        }
     }
 
     // NOTIFICATION SYSTEM
@@ -871,7 +617,7 @@
                 console.log('Current data:');
                 console.log('- Users:', JSON.parse(localStorage.getItem('user-admin') || '[]').length + JSON.parse(localStorage.getItem('other-users') || '[]').length);
                 console.log('- Lessons:', JSON.parse(localStorage.getItem('lessons') || '[]').length);
-                console.log('- Announcements:', JSON.parse(localStorage.getItem('announcements') || '[]').length);
+                
                 
             } catch(error) {
                 console.error('Error during initialization:', error);
@@ -897,7 +643,7 @@
         updateDashboard();
     }, 30000);
 
-    // ...existing code for other functions (users, announcements, etc.)...
+    // ...existing code for other functions (users, etc.)...
     </script>
 </body>
 </html>
